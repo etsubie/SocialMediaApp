@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import cors from 'cors'
 import postRouter from "./routes/postRoute.js";
 
 dotenv.config();
@@ -10,6 +11,7 @@ const port = process.env.port;
 const URL = process.env.CONNECTION_URL;
 
 app.use(express.json())
+app.use(cors())
 app.get('/', (req, res) => {
     console.log(req)
     res.json('welcome')
