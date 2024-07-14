@@ -27,8 +27,9 @@ export const fechPost = async(req, res) => {
 
 export const createPost = async (req, res) => {
   try {
-    const post = req.body;
-    const newPost = await postModel.create(post);
+    const {title, creator, tags, message, file, createdAt} = req.body;
+    const newPost = await postModel.create({title, creator, tags, message, file, createdAt:new Date().toISOString()
+    });
     newPost.save();
     res.status(200).json(newPost);
   } catch (error) {
