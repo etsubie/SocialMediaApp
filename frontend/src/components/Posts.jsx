@@ -4,7 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../actions/posts";
 
-const Posts = () => {
+const Posts = ({setCurId}) => {
   const {posts} = useSelector((state) => state.posts);
   const dispatch = useDispatch()
     
@@ -18,7 +18,7 @@ const Posts = () => {
    <div className="flex gap-6 flex-wrap">
     {posts.map((post) => (
       <div key={post._id}>
-        <Post post={post}/>
+        <Post post={post} setCurId={setCurId}/>
       </div>
     ))}
    </div>

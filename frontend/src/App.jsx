@@ -1,18 +1,19 @@
 import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Appbar from "./components/Appbar";
 import Form from "./components/Form";
-import Posts from "./components/Posts";
+import Holder from "./components/Holder";
 
 const App = () => {
   return (
     <div className="p-5">
       <Appbar />
-      <div className="flex flex-col-reverse md:flex-row justify-between m-4">
-        <div className="mt-6">
-        <Posts />
-        </div>
-        <Form />
-      </div>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Holder />} />
+            <Route path="/:id" element={<Form />} />
+          </Routes>
+        </BrowserRouter>
     </div>
   );
 };
