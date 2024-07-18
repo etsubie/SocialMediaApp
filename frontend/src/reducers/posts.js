@@ -1,16 +1,15 @@
 const posts = (state = { posts: [] }, action) => {
   switch (action.type) {
-    case 'FETCH_BY_ID':
-        return {...state, posts: state.posts.find((post) => post._id === action.payload.id)}
     case "FETCH_ALL":
       return { ...state, posts: action.payload };
     case "CREATE":
         return { ...state, posts: [...state.posts, action.payload] };
         case "UPDATE":
+        case 'LIKE':
           return {
             ...state,
             post: state.posts.map((post) =>
-              post._id === action.payload.id ? action.payload : post
+              post._id === action.payload._id ? action.payload : post
             ),
           };
         case "DELETE":

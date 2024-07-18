@@ -1,6 +1,6 @@
-import React, {  useState } from "react";
+import React, { useEffect, useState } from "react";
 import FileBase from "react-file-base64";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPost, updatePost } from "../actions/posts";
 
 const Form = ({ curId, setCurId }) => {
@@ -11,7 +11,14 @@ const Form = ({ curId, setCurId }) => {
     message: "",
     file: "",
   });
-const dispatch = useDispatch()
+
+  const dispatch = useDispatch();
+  const post = useSelector((state) => curId ? state.posts.posts.find((p) => p._id === curId) : null);
+
+  useEffect(() => {
+    if (post) setPostData(post);
+  }, [post]);
+
   const onChange = (e) => {
     setPostData((prev) => ({
       ...prev,
@@ -31,16 +38,14 @@ const dispatch = useDispatch()
       dispatch(addPost(postData));
     }
     clear();
-    setCurId(null);
+    setCurId(null)
   };
 
   return (
     <div className="grid gap-5 justify-items-center grid-flow-row shadow-md shadow-slate-400 p-4 mt-4 h-1/3">
       <form className="w-full md:w-[350px]" onSubmit={handleSubmit}>
         <div className="grid gap-5 justify-items-center grid-flow-row">
-          <h4 className="text-2xl">
-            {curId ? `Editing a Memory` : `Creating a Memory`}
-          </h4>
+          <h4 className="text-2xl">{curId ? `Editing a Memory` : `Creating a Memory`}</h4>
           <input
             type="text"
             name="creator"

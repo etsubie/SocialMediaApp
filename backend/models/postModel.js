@@ -4,7 +4,7 @@ const postSchema = new mongoose.Schema({
   title: String,
   creator: String,
   message: String,
-  tag: [String],
+  tags: [String],
   file: String,
   likeCount: {
     type: Number,

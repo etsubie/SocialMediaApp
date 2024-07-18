@@ -1,17 +1,9 @@
 import * as api from "../api/index";
 
-export const getPostById = (id) => async (dispatch) => {
-  try {
-    const { data } = await api.fetchByIdApi(id);
-    dispatch({ type: "FETCH_BY_ID", payload: data });
-  } catch (error) {
-    console.log({ message: error.message });
-  }
-};
 export const getPosts = () => async (dispatch) => {
   try {
     const { data } = await api.fetchApi();
-    dispatch({ type: "FETCH_ALL", payload: data.posts });
+    dispatch({ type: "FETCH_ALL", payload: data });
   } catch (error) {
     console.log({ message: error.message });
   }
@@ -31,7 +23,7 @@ export const updatePost = (id, post) => async (dispatch) => {
     const {data} = await api.updateApi(id, post)
     dispatch({type: 'UPDATE', payload: data})
   } catch (error) {
-    console.log({message: error})
+    console.log(error)
   }
 }
 
@@ -43,3 +35,12 @@ export const deletePost = (id) => async (dispatch) => {
     console.log({message: error})
   }
 } 
+
+export const likePost = (id, post) => async (dispatch) => {
+  try {
+    const {data} = await api.likePost(id, post)
+    dispatch({type: 'LIKE', payload: data})
+  } catch (error) {
+    console.log(error)
+  }
+}
