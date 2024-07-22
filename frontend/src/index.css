@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .input{
-    @apply outline-none border-2 border-s-gray-300 w-full p-2 text-[17px]
+    @apply outline-none border-2 border-s-gray-300 w-full p-2 text-[17px] rounded-md
 }

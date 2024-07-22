@@ -4,7 +4,7 @@ import { createPost, deletePost, fechPosts, likePost, updatePost } from '../cont
 const postRouter = express.Router()
 
 postRouter.get('/', fechPosts)
-postRouter.post('/', createPost)
+postRouter.post('/create', createPost)
 postRouter.patch('/:id', updatePost)
 postRouter.delete('/:id', deletePost)
 postRouter.patch('/:id/like', likePost)
