@@ -19,20 +19,23 @@ const Posts = () => {
       {!posts.length ? (
         <div className="flex  justify-between">
           <CircularProgress />
-          <AddCircleRoundedIcon />
+          <AddCircleRoundedIcon
+            className="cursor-pointer mt-9"
+            onClick={() => navigate("/create")}
+          />
         </div>
       ) : (
         <div className="flex justify-between">
-        <div className=" mt-9 md:mt-4 flex gap-6 flex-wrap justify-center">
-          {posts.map((post) => (
-            <div key={post._id}>
-              <Post post={post} />
-            </div>
-          ))}{" "}
-        </div>
-        <AddCircleRoundedIcon
+          <div className=" mt-9 md:mt-4 flex gap-6 flex-wrap justify-center">
+            {posts.map((post) => (
+              <div key={post._id}>
+                <Post post={post} />
+              </div>
+            ))}{" "}
+          </div>
+          <AddCircleRoundedIcon
             className="cursor-pointer mt-9"
-            onClick={() => navigate('/create')}
+            onClick={() => navigate("/create")}
           />
         </div>
       )}
