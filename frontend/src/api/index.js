@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API = axios.create({baseURL: 'http://localhost:5200/'})
+// const API = axios.create({baseURL: 'http://localhost:5200/'})
+const API = axios.create({baseURL: 'https://socialmediaapp-bm3e.onrender.com/'})
 
 export const fetchApi = () => API.get('/posts/')
 export const createApi = (post) => API.post('/posts/create', post)
