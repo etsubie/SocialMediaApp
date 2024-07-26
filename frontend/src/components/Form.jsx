@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Profiler, useEffect, useState } from "react";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost, getPosts, updatePost } from "../actions/posts";
@@ -6,13 +6,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 const Form = () => {
   const [postData, setPostData] = useState({
-    creator: "",
+    creator: '',
     title: "",
     tags: "",
     message: "",
     file: "",
   });
-
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -29,14 +28,11 @@ const Form = () => {
   }, [post, id]);
 
   const onChange = (e) => {
-    setPostData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setPostData({ ...postData, [e.target.name]: e.target.value });
   };
 
   const clear = () => {
-    setPostData({ creator: "", title: "", tags: "", message: "", file: "" });
+    setPostData({creator: '', title: "", tags: "", message: "", file: "" });
   };
 
   const handleSubmit = (e) => {
@@ -52,7 +48,10 @@ const Form = () => {
 
   return (
     <>
-      <KeyboardBackspaceIcon className="mt-9 text-start cursor-pointer" onClick={() => navigate("/")} />
+      <KeyboardBackspaceIcon
+        className="mt-9 text-start cursor-pointer"
+        onClick={() => navigate("/")}
+      />
 
       <div className="grid gap-5 w-auto md:w-[450px] justify-center grid-flow-row shadow-md shadow-slate-400 p-4 mt-4 h-1/3">
         <form className="w-full" onSubmit={handleSubmit}>
