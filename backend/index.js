@@ -7,8 +7,8 @@ import postRouter from "./routes/postRoute.js";
 dotenv.config();
 
 const app = express();
-const port = process.env.port;
-const URL = process.env.CONNECTION_URL || 5200;
+const port = process.env.PORT;
+const URL = process.env.CONNECTION_URL;
 
 app.use(express.json({limit: '50mb'}))
 app.use(cors())
