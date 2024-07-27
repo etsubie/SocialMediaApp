@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from 'cors'
 import postRouter from "./routes/postRoute.js";
+import userRouter from "./routes/userRoute.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
     res.json('welcome')
 })
 app.use('/posts', postRouter)
+app.use('/users', userRouter)
 
 mongoose
   .connect(URL)

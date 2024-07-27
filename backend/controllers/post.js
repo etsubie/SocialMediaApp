@@ -14,9 +14,8 @@ export const fechPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
   try {
-    const {title, creator, tags, message, file, createdAt} = req.body;
-    const newPost = await postModel.create({title, creator, tags, message, file, createdAt:new Date().toISOString()
-    });
+    const post = req.body;
+    const newPost = await postModel.create({...post, creator: req.userId, createdAt: new Date().toISOString()});
     newPost.save();
     res.status(200).json(newPost);
   } catch (error) {
@@ -54,8 +53,17 @@ export const deletePost = async (req, res) => {
 export const likePost = async(req, res) => {
   try {
       const {id} = req.params
+      if(!req.userId) return res.json({message: 'Unauthenticated'})
       const post = await postModel.findById(id)
-      const likedPost = await postModel.findByIdAndUpdate(id,{likeCount: post.likeCount + 1}, {new: true})
+     
+      const index = post.likes.findIndex((id) => id === String(req.userId))
+      if (index === -1){
+        post.likes.push(req.userId)
+      }else{
+        post.likes = post.likes.filter((id) => id === String(req.userId))
+      }
+
+      const likedPost = await postModel.findByIdAndUpdate(id,post, {new: true})
       if(!post){
         return  res.status(404).json('post not found')
       }

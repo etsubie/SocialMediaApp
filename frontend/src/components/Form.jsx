@@ -6,12 +6,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 const Form = () => {
   const [postData, setPostData] = useState({
-    creator: '',
     title: "",
     tags: "",
     message: "",
     file: "",
   });
+  const user = JSON.parse(localStorage.getItem("profile"));
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -32,24 +32,30 @@ const Form = () => {
   };
 
   const clear = () => {
-    setPostData({creator: '', title: "", tags: "", message: "", file: "" });
+    setPostData({ title: "", tags: "", message: "", file: "" });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (id) {
-      dispatch(updatePost(id, postData));
+      console.log('Updating post:', { ...postData, name: user?.result?.name });
+      dispatch(updatePost(id, { ...postData, name: user?.result?.name }));
     } else {
-      dispatch(addPost(postData));
+      console.log('Adding post:', { ...postData, name: user?.result?.name });
+      dispatch(addPost({ ...postData, name: user?.result?.name }));
     }
     clear();
     navigate("/");
   };
+  
+  if(!user?.result?.name) return (
+   <span>please sign in to create and like memories</span> 
+  )
 
   return (
     <>
       <KeyboardBackspaceIcon
-        className="mt-9 text-start cursor-pointer"
+        className="text-start cursor-pointer"
         onClick={() => navigate("/")}
       />
 
@@ -59,14 +65,6 @@ const Form = () => {
             <h4 className="text-2xl">
               {id ? `Editing a Memory` : `Creating a Memory`}
             </h4>
-            <input
-              type="text"
-              name="creator"
-              placeholder="Creator"
-              className="input"
-              value={postData.creator}
-              onChange={onChange}
-            />
             <input
               type="text"
               name="title"

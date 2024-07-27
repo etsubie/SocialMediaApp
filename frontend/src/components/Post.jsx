@@ -28,7 +28,7 @@ const Post = ({ post }) => {
       <div className="p-3">
         <div className="relative top-[-205px] text-white text-xl grid grid-flow-col justify-between">
           <div className="grid grid-flow-row">
-            <span>{post.creator}</span>
+            <span>{post.name}</span>
             <span>{moment(post.createdAt).fromNow()}</span>
           </div>
           <MoreHorizIcon

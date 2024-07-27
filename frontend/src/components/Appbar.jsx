@@ -1,15 +1,20 @@
 import Avatar from "@mui/material/Avatar";
 import memories from "../images/memories.png";
 import { deepOrange } from "@mui/material/colors";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Appbar = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const token = user?.token;
+    setUser(JSON.parse(localStorage.getItem("profile")));
+  }, [location]);
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
@@ -18,7 +23,7 @@ const Appbar = () => {
   };
 
   return (
-    <div className="grid grid-flow-col justify-between shadow-slate-400 shadow-lg pl-4 pr-4 items-center w-full">
+    <div className="grid grid-flow-col justify-between shadow-slate-400 shadow-lg pl-4 mb-9 pr-4 items-center w-full">
       <Link to="/" className="flex items-center">
         <span className="text-blue-400 text-[50px]">Memories</span>
         <img src={memories} alt="memories" className="w-14 ml-2" />
@@ -37,7 +42,7 @@ const Appbar = () => {
               Logout
             </button>
             <Avatar sx={{ bgcolor: deepOrange[500], cursor: "pointer" }}>
-              {user?.result?.name.charAt[0]}
+              {user?.result?.name.charAt(0)}
             </Avatar>
           </div>
         )}

@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Appbar from "./components/Appbar";
 import Form from "./components/Form";
+import Auth from "./components/Auth";
 import Posts from "./components/Posts";
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
           <Route path="/" element={<Posts />} />
           <Route path="/create" element={<Form />} />
           <Route path="/:id" element={<Form />} />
+          <Route path="/auth" element={<Auth />} />
         </Routes>
       </BrowserRouter>
     </div>
