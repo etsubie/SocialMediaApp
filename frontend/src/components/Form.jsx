@@ -1,4 +1,4 @@
-import React, { Profiler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost, getPosts, updatePost } from "../actions/posts";
@@ -38,16 +38,14 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (id) {
-      console.log('Updating post:', { ...postData, name: user?.result?.name });
-      dispatch(updatePost(id, { ...postData, name: user?.result?.name }));
+      dispatch(updatePost(id, {...postData, name: user?.result?.name}));
     } else {
-      console.log('Adding post:', { ...postData, name: user?.result?.name });
-      dispatch(addPost({ ...postData, name: user?.result?.name }));
+      dispatch(addPost({...postData, name: user?.result?.name}));
     }
+    console.log(postData)
     clear();
     navigate("/");
   };
-  
   if(!user?.result?.name) return (
    <span>please sign in to create and like memories</span> 
   )

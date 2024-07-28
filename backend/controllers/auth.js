@@ -32,12 +32,35 @@ export const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 12);
     const result = await userModel.create({
       email,
-      password,
-      hashedPassword,
+      password:hashedPassword,
       name: `${firstName} ${secondName}`,
     });
     const token = jwt.sign({ email: result.email, id: result._id }, "test");
     res.status(200).json({ result, token });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const fechUsers = async (req, res) => {
+  try {
+    const users = await userModel.find();
+    if (!users) {
+      res.status(404).json("no users found");
+    }
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedUser = await userModel.findByIdAndDelete(id);
+    if (!deletedUser) {
+      return res.status(404).json("User Not Found");
+    }
+    res.status(200).json(deletedUser);
   } catch (error) {
     console.log(error);
   }

@@ -1,13 +1,14 @@
 import axios from "axios";
 
-const API = axios.create({baseURL: 'https://socialmediaapp-bm3e.onrender.com/'})
+const API = axios.create({baseURL: 'http://localhost:5200/'})
+// const API = axios.create({baseURL: 'https://socialmediaapp-bm3e.onrender.com/'})
 
 API.interceptors.request.use((req) => {
-    if (localStorage.getItem('profile')) {
-      req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
+    if(localStorage.getItem('profile')){
+        req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`
     }
-    return req;
-  });   
+    return req
+})
 
 export const fetchApi = () => API.get('/posts/')
 export const createApi = (post) => API.post('/posts/create', post)

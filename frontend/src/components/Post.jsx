@@ -3,6 +3,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import moment from "moment";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../actions/posts";
 import { useNavigate } from "react-router-dom";
@@ -10,16 +11,38 @@ import { useNavigate } from "react-router-dom";
 const Post = ({ post }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [likeCount, setLikeCount] = useState(post.likeCount);
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   const handleEdit = (id) => {
     navigate(`/${id}`);
   };
 
-  const handleLike = (id) => {
-    dispatch(likePost(id));
-    setLikeCount(likeCount + 1);
+  const Likes = () => {
+    if (post.likes.length > 0) {
+      return post.likes.find((like) => like === user?.result?._id) ? (
+        <>
+          <ThumbUpAltIcon className="cursor-pointer text-blue-700" />
+          <span className="ml-1 text-xl">
+            {post.likes.length > 2
+              ? `You and ${post.likes.length - 1} others`
+              : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+          </span>
+        </>
+      ) : (
+        <>
+          <ThumbUpOffAltIcon className="cursor-pointer text-blue-700" />
+          <span className="ml-1 text-xl">
+            {post.likes.length} {post.likes.length === 1 ? "Like" : " Likes"}
+          </span>
+        </>
+      );
+    }
+    return (
+      <>
+        <ThumbUpOffAltIcon className="cursor-pointer text-blue-700" />
+        <span className="ml-1 text-xl">&nbsp;likes</span>
+      </>
+    );
   };
 
   return (
@@ -37,13 +60,14 @@ const Post = ({ post }) => {
           />
         </div>
         <div className="flex flex-col relative top-[-55px]">
-          <span className=" text-gray-400">{post.tags.map((tag) => `#${tag}`)}</span>
+          <span className=" text-gray-400">
+            {post.tags.map((tag) => `#${tag}`)}
+          </span>
           <span className="text-2xl mt-2 mb-2 font-medium">{post.title}</span>
           <span className="text-xl text-gray-600 ">{post.message}</span>
           <div className="flex justify-between">
-            <div onClick={() => handleLike(post._id)}>
-              <ThumbUpAltIcon className="cursor-pointer text-blue-700" />
-              <span className="ml-1 text-xl">{likeCount}&nbsp;likes</span>
+            <div disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
+             <Likes/>
             </div>
             <DeleteIcon
               className="cursor-pointer text-blue-700"
