@@ -46,10 +46,6 @@ const Form = () => {
     clear();
     navigate("/");
   };
-  if(!user?.result?.name) return (
-   <span>please sign in to create and like memories</span> 
-  )
-
   return (
     <>
       <KeyboardBackspaceIcon

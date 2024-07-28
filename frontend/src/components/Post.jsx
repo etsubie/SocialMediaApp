@@ -40,7 +40,7 @@ const Post = ({ post }) => {
     return (
       <>
         <ThumbUpOffAltIcon className="cursor-pointer text-blue-700" />
-        <span className="ml-1 text-xl">&nbsp;likes</span>
+        <span className="ml-1 text-xl">&nbsp;like</span>
       </>
     );
   };
@@ -54,10 +54,12 @@ const Post = ({ post }) => {
             <span>{post.name}</span>
             <span>{moment(post.createdAt).fromNow()}</span>
           </div>
-          <MoreHorizIcon
-            className="cursor-pointer"
-            onClick={() => handleEdit(post._id)}
-          />
+         {user?.result?._id === post?.creator && (
+           <MoreHorizIcon
+           className="cursor-pointer"
+           onClick={() => handleEdit(post._id)}
+         />
+         )}
         </div>
         <div className="flex flex-col relative top-[-55px]">
           <span className=" text-gray-400">
@@ -66,13 +68,17 @@ const Post = ({ post }) => {
           <span className="text-2xl mt-2 mb-2 font-medium">{post.title}</span>
           <span className="text-xl text-gray-600 ">{post.message}</span>
           <div className="flex justify-between">
-            <div disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
-             <Likes/>
-            </div>
-            <DeleteIcon
+            {user?.result?.name && (
+              <div disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
+              <Likes/>
+             </div>
+            )}
+           {user?.result._id === post?.creator && (
+             <DeleteIcon
               className="cursor-pointer text-blue-700"
               onClick={() => dispatch(deletePost(post._id))}
             />
+           )}
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import * as api from "../api/index";
 import { AUTH } from "../constants/actionTypes";
+import { toast } from 'react-toastify';
 
 export const signin = (formData, navigate) => async (dispatch) => {
   try {
@@ -7,8 +8,9 @@ export const signin = (formData, navigate) => async (dispatch) => {
     dispatch({ type: AUTH, data });
     navigate("/");
   } catch (error) {
+    toast.error(error.response.data)
     console.log(error);
-  }
+  }   
 };
 export const signup = (formData, navigate) => async (dispatch) => {
   try {

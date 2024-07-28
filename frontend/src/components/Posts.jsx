@@ -10,6 +10,7 @@ const Posts = () => {
   const { posts } = useSelector((state) => state.posts);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem('profile'))
 
   useEffect(() => {
     dispatch(getPosts());
@@ -19,10 +20,15 @@ const Posts = () => {
       {!posts.length ? (
         <div className="flex  justify-between">
           <CircularProgress />
-          <AddCircleRoundedIcon
-            className="cursor-pointer"
-            onClick={() => navigate("/create")}
-          />
+         {user?.result.name ? (
+           <AddCircleRoundedIcon
+           className="cursor-pointer"
+           onClick={() => navigate("/create")}
+         />
+         ):(
+          <span>please sign in to create and like memories</span> 
+
+         )}
         </div>
       ) : (
         <div className="flex justify-between">
@@ -33,10 +39,15 @@ const Posts = () => {
               </div>
             ))}
           </div>
-          <AddCircleRoundedIcon
-            className="cursor-pointer"
-            onClick={() => navigate("/create")}
-          />
+           {user?.result.name ? (
+           <AddCircleRoundedIcon
+           className="cursor-pointer"
+           onClick={() => navigate("/create")}
+         />
+         ):(
+          <span>please sign in to create and like memories</span> 
+
+         )}
         </div>
       )}
     </>
